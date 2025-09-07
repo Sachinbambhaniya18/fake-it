@@ -6,11 +6,13 @@ import com.krane.fakeit.service.MockManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public class MockManagementServiceImpl implements MockManagementService {
 
     @Autowired
@@ -22,6 +24,7 @@ public class MockManagementServiceImpl implements MockManagementService {
             mockRequestsRepository.save(mockEndPoint);
             return new ResponseEntity<>("Success", HttpStatus.CREATED);
         } catch (Exception e) {
+//            e.printStackTrace();
             return new ResponseEntity<>("Request Failed", HttpStatus.BAD_REQUEST);
         }
     }

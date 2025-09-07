@@ -18,6 +18,7 @@ public class MockManagementController {
 
     @PostMapping("/mocks")
     public ResponseEntity<String> createMock(@RequestBody MockEndPoint mockEndPoint) {
+        System.out.println(mockEndPoint.toString());
         return mockManagementService.createMock(mockEndPoint);
     }
 
