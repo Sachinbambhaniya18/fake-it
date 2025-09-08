@@ -9,6 +9,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * REST controller for managing mock API definitions.
+ *
+ * <p>This controller exposes CRUD operations under the <code>/mocks</code> path.
+ * It allows testers or developers to dynamically create, view, and delete
+ * mock endpoints at runtime.</p>
+ */
 @RestController
 @RequestMapping
 public class MockManagementController {
