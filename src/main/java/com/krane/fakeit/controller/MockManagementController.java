@@ -17,7 +17,7 @@ import java.util.UUID;
  * mock endpoints at runtime.</p>
  */
 @RestController
-@RequestMapping
+@RequestMapping("/fake-it/v1")
 public class MockManagementController {
 
     @Autowired
