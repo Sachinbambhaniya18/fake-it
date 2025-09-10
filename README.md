@@ -26,7 +26,7 @@ This makes it easier for **frontend developers and testers** to work independent
 ## ⚙️ Tech Stack
 - **Spring Boot** – REST API framework  
 - **Spring Data JPA** – database access  
-- **MySQL/PostgreSQL** – persistence layer  
+- **MySQL/PostgreSQL or any relational database** – persistence layer  
 
 
 
