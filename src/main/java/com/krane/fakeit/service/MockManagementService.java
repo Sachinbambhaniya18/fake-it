@@ -1,7 +1,7 @@
 package com.krane.fakeit.service;
 
+import com.krane.fakeit.dto.MockEndPointDTO;
 import com.krane.fakeit.impl.MockManagementServiceImpl;
-import com.krane.fakeit.model.MockEndPoint;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -22,11 +22,11 @@ import java.util.UUID;
  */
 public interface MockManagementService {
 
-    ResponseEntity<String> createMock(MockEndPoint mockEndPoint);
+    ResponseEntity<String> createMock(MockEndPointDTO mockEndPoint);
 
-    ResponseEntity<List<MockEndPoint>> getMocks();
+    ResponseEntity<List<MockEndPointDTO>> getMocks();
 
-    ResponseEntity<MockEndPoint> getMockById(UUID id);
+    ResponseEntity<MockEndPointDTO> getMockById(UUID id);
 
     ResponseEntity<String> deleteMockById(UUID id);
 }

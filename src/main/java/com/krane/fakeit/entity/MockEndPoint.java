@@ -1,4 +1,4 @@
-package com.krane.fakeit.model;
+package com.krane.fakeit.entity;
 
 import com.krane.fakeit.enums.HttpMethod;
 import jakarta.persistence.*;

@@ -1,6 +1,9 @@
 package com.krane.fakeit.impl;
 
-import com.krane.fakeit.model.MockEndPoint;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.krane.fakeit.dto.MockEndPointDTO;
+import com.krane.fakeit.entity.MockEndPoint;
+import com.krane.fakeit.mapper.MockMapper;
 import com.krane.fakeit.repository.MockRequestsRepository;
 import com.krane.fakeit.service.MockManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,51 +33,47 @@ import java.util.UUID;
 public class MockManagementServiceImpl implements MockManagementService {
 
     @Autowired
-    MockRequestsRepository mockRequestsRepository;
+    private MockRequestsRepository mockRequestsRepository;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Override
-    public ResponseEntity<String> createMock(MockEndPoint mockEndPoint) {
+    public ResponseEntity<String> createMock(MockEndPointDTO dto) {
         try {
 
-            MockEndPoint mockEndPointMap = MockEndPoint.builder()
-                    .path(mockEndPoint.getPath())
-                    .method(mockEndPoint.getMethod())
-                    .name(mockEndPoint.getName())
-                    .responseBody(mockEndPoint.getResponseBody())
-                    .statusCode(mockEndPoint.getStatusCode())
-                    .enabled(true)
-                    .id(mockEndPoint.getId())
-                    .build();
-
-            mockRequestsRepository.save(mockEndPointMap);
+            MockEndPoint entity = MockMapper.toEntity(dto, objectMapper);
+            mockRequestsRepository.save(entity);
             return new ResponseEntity<>("Success", HttpStatus.CREATED);
 
         } catch (DataIntegrityViolationException e) {
             return new ResponseEntity<>("Mock with this path and method already exists", HttpStatus.CONFLICT);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return new ResponseEntity<>("Request Failed", HttpStatus.BAD_REQUEST);
         }
     }
 
     @Override
-    public ResponseEntity<List<MockEndPoint>> getMocks() {
+    public ResponseEntity<List<MockEndPointDTO>> getMocks() {
         try {
-            return new ResponseEntity<>(mockRequestsRepository.findAll(), HttpStatus.OK);
+            List<MockEndPointDTO> dtos = mockRequestsRepository.findAll()
+                    .stream()
+                    .map(entity -> MockMapper.toDto(entity, objectMapper))
+                    .toList();
+            return new ResponseEntity<>(dtos, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @Override
-    public ResponseEntity<MockEndPoint> getMockById(UUID id) {
+    public ResponseEntity<MockEndPointDTO> getMockById(UUID id) {
         try {
             return mockRequestsRepository.findById(id)
-                    .map(mockEndPoint -> new ResponseEntity<>(mockEndPoint, HttpStatus.OK))
+                    .map(entity -> new ResponseEntity<>(MockMapper.toDto(entity, objectMapper), HttpStatus.OK))
                     .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
         } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(new MockEndPoint(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -90,3 +89,4 @@ public class MockManagementServiceImpl implements MockManagementService {
         }
     }
 }
+
