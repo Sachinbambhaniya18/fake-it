@@ -66,7 +66,7 @@ spring.jpa.hibernate.ddl-auto=create
 POST /fake-it/v1/mocks
 Content-Type: application/json
 ```
-```
+```json
 {
   "name": "Get all users",
   "path": "/api/users",
@@ -88,7 +88,7 @@ GET /api/users
 Content-Type: application/json
 ```
 **Response**
-```
+```json
 {
     "users": [
       { "id": 1, "name": "Raja Hindustani" },
@@ -96,3 +96,4 @@ Content-Type: application/json
     ]
 }
 ```
+
