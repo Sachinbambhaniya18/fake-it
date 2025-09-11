@@ -30,9 +30,69 @@ This makes it easier for **frontend developers and testers** to work independent
 
 
 
-## 🧑‍💻 Getting Started
-1. Clone the repository.  
-2. Configure your database in `application.properties`.  
-3. Run the app with:  
+## 🧑‍💻 Getting Started  
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/your-username/fake-it.git
+cd fake-it
+```
+
+### 2. Configure your database
+In `src/main/resources/application.properties`, add your database connection details:
+
+```properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/fake_it   # or mysql url
+spring.datasource.username=your_db_user
+spring.datasource.password=your_db_password
+
+# First run: create tables automatically
+spring.jpa.hibernate.ddl-auto=create
+
+# After the first successful run: switch to "update" and re-run the application
+# spring.jpa.hibernate.ddl-auto=update
+```
+
+### 3. Run the app with:  
    ```bash
    mvn spring-boot:run
+  ```
+
+## 📌 Mock Examples
+
+### 1. Create a Mock
+**Request**  
+```http
+POST /fake-it/v1/mocks
+Content-Type: application/json
+```
+```
+{
+  "name": "Get all users",
+  "path": "/api/users",
+  "method": "GET",
+  "statusCode": 200,
+  "responseBody": {
+    "users": [
+      { "id": 1, "name": "Raja Hindustani" },
+      { "id": 2, "name": "Munna Bhai" }
+    ]
+  },
+  "enabled": true
+}
+```
+
+**Mock Request**
+```http
+GET /api/users
+Content-Type: application/json
+```
+**Response**
+```
+{
+    "users": [
+      { "id": 1, "name": "Raja Hindustani" },
+      { "id": 2, "name": "Munna Bhai" }
+    ]
+}
+```
