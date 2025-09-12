@@ -5,6 +5,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.krane.fakeit.dto.MockEndPointDTO;
 import com.krane.fakeit.entity.MockEndPoint;
 
+/**
+ * Mapper utility class that provides conversion methods
+ * between {@link MockEndPointDTO} and {@link MockEndPoint}.
+ * <p>
+ * This class uses a provided {@link ObjectMapper} to handle
+ * serialization and deserialization of the response body field.
+ */
 public class MockMapper {
 
     public static MockEndPoint toEntity(MockEndPointDTO dto, ObjectMapper objectMapper) {
