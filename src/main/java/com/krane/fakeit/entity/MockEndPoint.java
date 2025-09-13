@@ -54,4 +54,8 @@ public class MockEndPoint {
     @Column(name = "enabled", nullable = false, columnDefinition = "boolean")
     private boolean enabled;
 
+    public void toggle() {
+        this.enabled = !this.enabled;
+    }
+
 }

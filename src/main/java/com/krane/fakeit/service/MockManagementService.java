@@ -28,5 +28,7 @@ public interface MockManagementService {
 
     ResponseEntity<MockEndPointDTO> getMockById(UUID id);
 
+    void toggleMock(UUID id);
+
     ResponseEntity<String> deleteMockById(UUID id);
 }

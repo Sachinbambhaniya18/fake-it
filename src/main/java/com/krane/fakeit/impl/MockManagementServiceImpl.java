@@ -6,6 +6,7 @@ import com.krane.fakeit.entity.MockEndPoint;
 import com.krane.fakeit.mapper.MockMapper;
 import com.krane.fakeit.repository.MockRequestsRepository;
 import com.krane.fakeit.service.MockManagementService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -74,6 +75,14 @@ public class MockManagementServiceImpl implements MockManagementService {
                     .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public void toggleMock(UUID id) {
+        int updated = mockRequestsRepository.toggleEnabled(id);
+        if (updated == 0) {
+            throw new EntityNotFoundException("Mock not found: " + id);
         }
     }
 

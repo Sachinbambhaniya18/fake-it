@@ -38,6 +38,11 @@ public class MockManagementController {
         return mockManagementService.getMockById(id);
     }
 
+    @PutMapping("/mocks/{id}/toggle")
+    public void toggleMock(@PathVariable UUID id) {
+        mockManagementService.toggleMock(id);
+    }
+
     @DeleteMapping("/mocks/{id}")
     public ResponseEntity<String> deleteMockById(@PathVariable UUID id) {
         return mockManagementService.deleteMockById(id);
