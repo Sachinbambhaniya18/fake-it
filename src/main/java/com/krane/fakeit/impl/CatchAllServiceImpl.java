@@ -29,7 +29,8 @@ public class CatchAllServiceImpl implements CatchAllService {
     @Autowired
     private ObjectMapper objectMapper;
 
-    public ResponseEntity<?> catchAll(HttpServletRequest servletRequest, String body) {
+    @Override
+    public ResponseEntity<?> catchAll(HttpServletRequest servletRequest) {
         String path = servletRequest.getRequestURI();
         String method = servletRequest.getMethod();
         String query = servletRequest.getQueryString();

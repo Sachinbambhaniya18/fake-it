@@ -1,6 +1,8 @@
 package com.krane.fakeit.service;
 
 import com.krane.fakeit.impl.CatchAllServiceImpl;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.ResponseEntity;
 
 /**
  * Service interface for the catch-all functionality.
@@ -13,6 +15,5 @@ import com.krane.fakeit.impl.CatchAllServiceImpl;
  * the actual logic.</p>
  */
 public interface CatchAllService {
-
-
+    ResponseEntity<?> catchAll(HttpServletRequest servletRequest);
 }
