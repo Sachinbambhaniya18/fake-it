@@ -1,7 +1,7 @@
 # Fake-It
 
-A lightweight **Spring Boot** application for creating and serving **mock APIs** dynamically.  
-Instead of hardcoding or spinning up temporary servers, you can define endpoints at runtime and store them in a database.  
+A lightweight **mock API platform** with a **React frontend** and a **Spring Boot backend**.  
+It allows developers and testers to **define, manage, and serve mock APIs dynamically**.  
 This makes it easier for **frontend developers and testers** to work independently of backend services.
 
 
@@ -12,6 +12,7 @@ This makes it easier for **frontend developers and testers** to work independent
 - Store mock definitions in a relational database (MySQL/Postgres).
 - Enable or disable mocks on demand.
 - Simple and extensible architecture.
+- Web dashboard to manage mocks visually.
 
 
 
@@ -24,18 +25,20 @@ This makes it easier for **frontend developers and testers** to work independent
 
 
 ## ⚙️ Tech Stack
-- **Spring Boot** – REST API framework  
-- **Spring Data JPA** – database access  
-- **MySQL/PostgreSQL or any relational database** – persistence layer  
+- **Backend**: Spring Boot, Spring Data JPA, PostgreSQL/MySQL  
+- **Frontend**: React, TailwindCSS  
+- **Database**: Any relational DB (Postgres/MySQL recommended)
 
 
 
 ## 🧑‍💻 Getting Started  
 
+### A. Backend
+
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/your-username/fake-it.git
-cd fake-it
+git clone https://github.com/Sachinbambhaniya18/fake-it.git
+cd fake-it-backend
 ```
 
 ### 2. Configure your database
@@ -97,3 +100,14 @@ Content-Type: application/json
 }
 ```
 
+### B. Frontend
+
+### Run the app with:  
+
+ ```bash
+   npm install
+   npm run dev
+  ```
+
+Frontend will be available at:
+👉 http://localhost:5173 (or the port shown in your terminal)
