@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.krane</groupId>
-	<artifactId>fakeit</artifactId>
+	<artifactId>fake-it-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>fakeit</name>
+	<name>fake-it-backend</name>
 	<description>A SpringBoot project for creating codeless fake APIs for Mocking</description>
 	<url/>
 	<licenses>
