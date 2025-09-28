@@ -22,28 +22,9 @@ export const useMocks = () => {
       }
       setMocks(mocksData);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to fetch mocks');
+      setError(err instanceof Error ? "No mocks found" : 'Failed to fetch mocks. Please try again later.');
 
-      setMocks([
-        {
-          id: '1',
-          name: 'User Profile API',
-          path: '/api/v1/user/profile',
-          method: 'GET',
-          statusCode: 200,
-          responseBody: { id: 1, name: 'John Doe', email: 'john@example.com' },
-          enabled: true,
-        },
-        {
-          id: '2',
-          name: 'Create Post API',
-          path: '/api/v1/posts',
-          method: 'POST',
-          statusCode: 201,
-          responseBody: { id: 123, title: 'New Post', content: 'Post content' },
-          enabled: false,
-        },
-      ]);
+      setMocks([]);
     } finally {
       setLoading(false);
     }

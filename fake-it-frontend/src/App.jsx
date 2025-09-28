@@ -53,7 +53,6 @@ function App() {
                 <p className="text-sm text-yellow-800">
                   <strong>API Connection Issue:</strong> {error}
                   <br />
-                  <span className="text-yellow-700">Demo data is being shown. Configure your API endpoints in Settings.</span>
                 </p>
               </div>
             </div>
