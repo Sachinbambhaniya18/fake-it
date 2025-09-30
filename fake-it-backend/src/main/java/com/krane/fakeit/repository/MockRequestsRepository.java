@@ -23,7 +23,7 @@ public interface MockRequestsRepository extends JpaRepository<MockEndPoint, UUID
 
     @Modifying
     @Transactional
-    @Query("UPDATE MockEndPoint m SET m.enabled = NOT m.enabled WHERE m.id = :id")
+    @Query(value = "UPDATE mock_requests SET enabled = NOT enabled WHERE mock_id = :id", nativeQuery = true)
     int toggleEnabled(@Param("id") UUID id);
 
 }
