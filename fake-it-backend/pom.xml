@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.krane</groupId>
 	<artifactId>fake-it-backend</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>fake-it-backend</name>
 	<description>A SpringBoot project for creating codeless fake APIs for Mocking</description>
 	<url/>
