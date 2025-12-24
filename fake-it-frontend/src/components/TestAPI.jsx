@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Play, Copy, CheckCircle, AlertCircle, Link, ExternalLink } from 'lucide-react';
+import { Play, Copy, CheckCircle, AlertCircle, Link, ExternalLink, Terminal, ArrowRight } from 'lucide-react';
 import { MockApiService } from '../services/mockApi';
 import { UrlUtils } from '../utils/urlUtils';
 import { useMocks } from '../hooks/useMocks';
@@ -98,189 +98,154 @@ export const TestAPI = () => {
     const enabledMocks = mocks.filter(mock => mock.enabled);
 
     return (
-        <div className="max-w-4xl mx-auto space-y-6">
-            <div className="bg-white rounded-lg shadow-md p-6">
-                <div className="flex items-center space-x-3 mb-6">
-                    <Play className="w-6 h-6 text-green-500" />
-                    <h2 className="text-2xl font-bold text-gray-900">API Tester</h2>
+        <div className="max-w-6xl mx-auto space-y-8">
+            <div className="flex items-center space-x-3 mb-6">
+                <div className="w-12 h-12 bg-black dark:bg-primary rounded-lg flex items-center justify-center">
+                    <Terminal className="w-6 h-6 text-primary dark:text-black" />
                 </div>
+                <div>
+                    <h2 className="text-3xl font-display font-bold text-dark dark:text-white">API Tester</h2>
+                    <p className="text-gray-500 dark:text-gray-400">Test your endpoints in real-time.</p>
+                </div>
+            </div>
 
-                {enabledMocks.length === 0 ? (
-                    <div className="text-center py-8">
-                        <AlertCircle className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                        <p className="text-gray-500 text-lg">No enabled mocks available</p>
-                        <p className="text-gray-400 text-sm mt-2">Create and enable some mocks to start testing</p>
-                    </div>
-                ) : (
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                        <div>
-                            <label htmlFor="mockSelect" className="block text-sm font-medium text-gray-700 mb-2">
-                                Select Mock Endpoint
-                            </label>
-                            <select
-                                id="mockSelect"
-                                value={selectedMock}
-                                onChange={(e) => handleMockSelection(e.target.value)}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                required
-                            >
-                                <option value="">Choose a mock endpoint...</option>
-                                {enabledMocks.map((mock) => (
-                                    <option key={mock.id} value={mock.id}>
-                                        {mock.method} {mock.path} - {mock.name}
-                                    </option>
-                                ))}
-                            </select>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Request Panel */}
+                <div className="bg-white dark:bg-dark rounded-[32px] p-8 shadow-sm border border-gray-100 dark:border-white/10 flex flex-col h-full transition-colors duration-300">
+                    {enabledMocks.length === 0 ? (
+                        <div className="text-center py-12 flex-1 flex flex-col justify-center items-center">
+                            <AlertCircle className="w-12 h-12 text-gray-300 dark:text-gray-600 mb-4" />
+                            <p className="text-gray-500 dark:text-gray-400 font-medium">No enabled mocks available</p>
                         </div>
-
-                        {selectedMockData && (
-                            <>
-                                <div className="bg-gray-50 rounded-lg p-4 space-y-3">
-                                    <div className="flex items-center justify-between">
-                                        <h3 className="text-lg font-medium text-gray-900">Selected Endpoint</h3>
-                                        <div className="flex items-center space-x-2">
-                                            <button
-                                                type="button"
-                                                onClick={copyApiUrl}
-                                                className="flex items-center space-x-2 px-3 py-1 bg-blue-100 text-blue-700 rounded-md hover:bg-blue-200 transition-colors text-sm"
-                                            >
-                                                <Copy className="w-4 h-4" />
-                                                <span>Copy Full API Link</span>
-                                            </button>
-                                            {selectedMockData?.method === 'GET' && (
-                                                <a
-                                                    href={fullApiUrl}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="flex items-center space-x-2 px-3 py-1 bg-green-100 text-green-700 rounded-md hover:bg-green-200 transition-colors text-sm"
-                                                >
-                                                    <ExternalLink className="w-4 h-4" />
-                                                    <span>Open in Browser</span>
-                                                </a>
-                                            )}
-                                        </div>
-                                    </div>
-
-                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                                        <div>
-                                            <span className="font-medium text-gray-600">Method:</span>
-                                            <span className={`ml-2 px-2 py-1 rounded text-xs font-medium ${selectedMockData.method === 'GET' ? 'bg-green-100 text-green-800' :
-                                                    selectedMockData.method === 'POST' ? 'bg-blue-100 text-blue-800' :
-                                                        selectedMockData.method === 'PUT' ? 'bg-yellow-100 text-yellow-800' :
-                                                            selectedMockData.method === 'DELETE' ? 'bg-red-100 text-red-800' :
-                                                                'bg-purple-100 text-purple-800'
-                                                }`}>
-                                                {selectedMockData.method}
-                                            </span>
-                                        </div>
-                                        <div>
-                                            <span className="font-medium text-gray-600">Status:</span>
-                                            <span className="ml-2 text-gray-900">{selectedMockData.statusCode}</span>
-                                        </div>
-                                        <div>
-                                            <span className="font-medium text-gray-600">Path:</span>
-                                            <span className="ml-2 font-mono text-gray-900">{selectedMockData.path}</span>
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <span className="font-medium text-gray-600">Full URL:</span>
-                                        <div className="mt-1 p-2 bg-white border rounded font-mono text-sm text-gray-900 break-all">
-                                            {fullApiUrl}
-                                        </div>
+                    ) : (
+                        <form onSubmit={handleSubmit} className="space-y-6 flex-1 flex flex-col">
+                            <div>
+                                <label htmlFor="mockSelect" className="block text-sm font-bold text-dark dark:text-white uppercase tracking-wider mb-2">
+                                    Target Endpoint
+                                </label>
+                                <div className="relative">
+                                    <select
+                                        id="mockSelect"
+                                        value={selectedMock}
+                                        onChange={(e) => handleMockSelection(e.target.value)}
+                                        className="w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border-2 border-gray-200 dark:border-white/10 rounded-xl appearance-none
+                                                    focus:outline-none focus:border-black dark:focus:border-primary focus:bg-white dark:focus:bg-black/20 transition-all
+                                                    font-medium text-dark dark:text-white cursor-pointer"
+                                        required
+                                    >
+                                        <option value="">Select an endpoint...</option>
+                                        {enabledMocks.map((mock) => (
+                                            <option key={mock.id} value={mock.id}>
+                                                [{mock.method}] {mock.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-400">
+                                        <ArrowRight className="w-5 h-5" />
                                     </div>
                                 </div>
+                            </div>
 
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label htmlFor="method" className="block text-sm font-medium text-gray-700 mb-2">
-                                            HTTP Method
-                                        </label>
-                                        <select
-                                            id="method"
-                                            name="method"
-                                            value={testData.method}
-                                            onChange={handleChange}
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                        >
-                                            <option value="GET">GET</option>
-                                            <option value="POST">POST</option>
-                                            <option value="PUT">PUT</option>
-                                            <option value="DELETE">DELETE</option>
-                                            <option value="PATCH">PATCH</option>
-                                        </select>
+                            {selectedMockData && (
+                                <div className="space-y-6 flex-1 flex flex-col">
+                                    <div className="bg-dark rounded-2xl p-4 font-mono text-sm text-gray-300 border border-gray-800 break-all shadow-inner">
+                                        <span className="text-primary font-bold mr-2">{selectedMockData.method}</span>
+                                        {fullApiUrl}
                                     </div>
 
-                                    <div className="flex items-end">
+                                    {(selectedMockData.method === 'POST' || selectedMockData.method === 'PUT' || selectedMockData.method === 'PATCH') && (
+                                        <div className="flex-1 flex flex-col">
+                                            <label htmlFor="requestBody" className="block text-sm font-bold text-dark dark:text-white uppercase tracking-wider mb-2">
+                                                Request Body (JSON)
+                                            </label>
+                                            <textarea
+                                                id="requestBody"
+                                                name="body"
+                                                value={testData.body}
+                                                onChange={handleChange}
+                                                className="w-full flex-1 p-4 bg-gray-50 dark:bg-white/5 border-2 border-gray-200 dark:border-white/10 rounded-xl 
+                                                         focus:outline-none focus:border-black dark:focus:border-primary focus:bg-white dark:focus:bg-black/20 transition-all
+                                                         font-mono text-sm dark:text-white"
+                                                placeholder="{}"
+                                            />
+                                        </div>
+                                    )}
+
+                                    <div className="pt-4 mt-auto">
                                         <button
                                             type="submit"
                                             disabled={loading}
-                                            className="w-full px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                                            className="w-full px-8 py-4 bg-black dark:bg-primary text-white dark:text-black rounded-2xl font-bold
+                                                     hover:bg-primary dark:hover:bg-white hover:text-black transition-all duration-300
+                                                     flex items-center justify-center space-x-2 shadow-lg disabled:opacity-50"
                                         >
-                                            <Play className="w-4 h-4" />
-                                            <span>{loading ? 'Testing...' : 'Test API'}</span>
+                                            {loading ? (
+                                                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white dark:border-black"></div>
+                                            ) : (
+                                                <>
+                                                    <Play className="w-5 h-5 fill-current" />
+                                                    <span>Send Request</span>
+                                                </>
+                                            )}
                                         </button>
                                     </div>
                                 </div>
-                            </>
-                        )}
-                    </form>
-                )}
+                            )}
+                        </form>
+                    )}
+                </div>
 
-                {copySuccess && (
-                    <div className="mt-4 bg-green-50 border border-green-200 rounded-lg p-3 flex items-center space-x-2">
-                        <CheckCircle className="w-5 h-5 text-green-500" />
-                        <span className="text-green-800 text-sm">{copySuccess}</span>
-                    </div>
-                )}
-            </div>
-
-            {/* Response Section */}
-            {(response || error) && (
-                <div className="bg-white rounded-lg shadow-md p-6">
-                    <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-lg font-semibold text-gray-900">Response</h3>
+                {/* Response Panel */}
+                <div className="bg-dark dark:bg-black rounded-[32px] p-8 shadow-xl border border-gray-800 dark:border-white/10 flex flex-col min-h-[500px] relative overflow-hidden transition-colors duration-300">
+                    <div className="flex items-center justify-between mb-6 pb-6 border-b border-gray-800 dark:border-white/10">
+                        <div className="flex items-center gap-3">
+                            <h3 className="text-xl font-display font-bold text-white">Console Output</h3>
+                            {response && (
+                                <span className={`px-2 py-1 rounded text-xs font-mono font-bold ${response.status < 300 ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
+                                    }`}>
+                                    STATUS: {response.status}
+                                </span>
+                            )}
+                        </div>
                         {response && (
                             <button
                                 onClick={() => UrlUtils.copyToClipboard(formatJson(response))}
-                                className="flex items-center space-x-2 text-sm text-gray-500 hover:text-gray-700"
+                                className="text-gray-500 hover:text-white transition-colors"
+                                title="Copy Response"
                             >
-                                <Copy className="w-4 h-4" />
-                                <span>Copy Response</span>
+                                <Copy className="w-5 h-5" />
                             </button>
                         )}
                     </div>
 
-                    {error && (
-                        <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start space-x-3">
-                            <AlertCircle className="w-5 h-5 text-red-500 mt-0.5" />
-                            <div>
-                                <p className="text-red-800 font-medium">Error</p>
-                                <p className="text-red-700 text-sm mt-1">{error}</p>
+                    <div className="flex-1 font-mono text-sm overflow-auto custom-scrollbar">
+                        {error && (
+                            <div className="text-red-400 bg-red-900/10 p-4 rounded-xl border border-red-900/20">
+                                <span className="font-bold block mb-1">Error:</span>
+                                {error}
                             </div>
-                        </div>
-                    )}
+                        )}
 
-                    {response && (
-                        <div className="space-y-4">
-                            <div className="flex items-center space-x-4">
-                                <div className="flex items-center space-x-2">
-                                    <CheckCircle className="w-5 h-5 text-green-500" />
-                                    <span className="font-medium text-gray-900">Status:</span>
-                                    <span className={`font-medium ${response.status >= 200 && response.status < 300 ? 'text-green-600' : 'text-red-600'}`}>
-                                        {response.status} {response.statusText}
-                                    </span>
-                                </div>
+                        {!response && !error && (
+                            <div className="h-full flex flex-col items-center justify-center text-gray-700 space-y-4">
+                                <Terminal className="w-16 h-16 opacity-20" />
+                                <p>Waiting for request...</p>
                             </div>
+                        )}
 
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Response Body:</label>
-                                <pre className="bg-gray-100 p-4 rounded-lg text-sm overflow-x-auto border">
-                                    {response.data}
-                                </pre>
-                            </div>
-                        </div>
-                    )}
+                        {response && (
+                            <pre className="text-gray-300 whitespace-pre-wrap">
+                                {response.data}
+                            </pre>
+                        )}
+                    </div>
+                </div>
+            </div>
+
+            {copySuccess && (
+                <div className="fixed bottom-8 right-8 bg-primary text-black rounded-xl px-6 py-4 flex items-center space-x-3 shadow-2xl animate-bounce font-bold">
+                    <CheckCircle className="w-5 h-5" />
+                    <span>{copySuccess}</span>
                 </div>
             )}
         </div>

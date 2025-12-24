@@ -6,6 +6,7 @@ import { MocksList } from './components/MocksList';
 import { TestAPI } from './components/TestAPI';
 import { useMocks } from './hooks/useMocks';
 import { Menu } from 'lucide-react';
+import Logo from './assets/logo.png';
 
 function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -39,17 +40,17 @@ function App() {
   }
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen bg-gray-100">
+    <div className="flex flex-col md:flex-row min-h-screen bg-gray-50 dark:bg-dark transition-colors duration-300">
       {/* Mobile Top Bar */}
-      <div className="flex items-center justify-between bg-slate-900 border-b p-4 md:hidden">
-        <p className="h-12 w-12">
-          <img src="/logo.svg" alt="logo" className='h-full w-full'/>
-        </p>
+      <div className="flex items-center justify-between bg-white dark:bg-dark border-b border-gray-200 dark:border-[#2C2D35] p-4 md:hidden">
+        <div className="flex items-center">
+          <img src={Logo} alt="fake-it" className="h-8 w-auto filter invert dark:invert-0" />
+        </div>
         <button
           onClick={() => setSidebarOpen(true)}
-          className="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="p-2 rounded-lg text-gray-600 dark:text-white hover:bg-gray-100 dark:hover:bg-white/10 transition-colors focus:outline-none"
         >
-          <Menu className="w-6 h-6 text-gray-50" />
+          <Menu className="w-6 h-6" />
         </button>
       </div>
 
@@ -64,52 +65,33 @@ function App() {
         />
         {/* Background overlay */}
         <div
-          className={`fixed inset-0 bg-black transition-opacity duration-300 ${sidebarOpen ? 'opacity-50' : 'opacity-0'}`}
+          className={`fixed inset-0 bg-black/50 dark:bg-black/80 backdrop-blur-sm transition-opacity duration-300 ${sidebarOpen ? 'opacity-100' : 'opacity-0'}`}
           onClick={() => setSidebarOpen(false)}
         ></div>
       </div>
 
       {/* Desktop Sidebar */}
-      <div className="hidden md:block">
+      <div className="hidden md:block h-screen sticky top-0">
         <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
       </div>
 
       {/* Main Content */}
-      <main className="flex-1 p-4 md:p-6 overflow-auto">
-        {error && (
-          <div className="mb-4 bg-yellow-50 border border-yellow-200 rounded-md p-4">
-            <div className="flex">
-              <div className="flex-shrink-0">
-                <svg
-                  className="h-5 w-5 text-yellow-400"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M8.257 3.099c.765-1.36 2.722-1.36 
-                    3.486 0l5.58 9.92c.75 1.334-.213 
-                    2.98-1.742 2.98H4.42c-1.53 
-                    0-2.493-1.646-1.743-2.98l5.58-9.92zM11 
-                    13a1 1 0 11-2 0 1 1 0 
-                    012 0zm-1-8a1 1 0 
-                    00-1 1v3a1 1 0 
-                    002 0V6a1 1 0 
-                    00-1-1z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-              <div className="ml-3">
-                <p className="text-sm text-yellow-800">
-                  <strong>API Connection Issue:</strong> {error}
-                </p>
+      <main className="flex-1 p-4 md:p-8 overflow-y-auto bg-gray-100 dark:bg-black md:rounded-l-[40px] relative transition-colors duration-300 text-dark dark:text-gray-200">
+        <div className="max-w-7xl mx-auto">
+          {error && (
+            <div className="mb-6 bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-r shadow-sm" role="alert">
+              <div className="flex">
+                <div className="py-1"><svg className="fill-current h-6 w-6 text-red-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z" /></svg></div>
+                <div>
+                  <p className="font-bold font-display">Connection Issue</p>
+                  <p className="text-sm">{error}</p>
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {renderContent()}
+          {renderContent()}
+        </div>
       </main>
     </div>
   );
