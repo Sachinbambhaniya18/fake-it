@@ -1,15 +1,5 @@
 # Fake-It
 
-Fake-It is a lightweight mock API platform designed to help frontend developers and testers work independently of live backend services.
-
-It provides a web interface and backend service that allow users to define HTTP endpoints dynamically and return predefined responses. Incoming requests are matched against stored mock definitions and served accordingly.
-
-The project consists of a React-based frontend for managing mocks and a Spring Boot backend responsible for request matching and response handling.
-
----
-
-## Overview
-
 In many development workflows, frontend development and testing depend on backend APIs that may be incomplete, unstable, or unavailable. Fake-It addresses this by allowing teams to define mock APIs at runtime without modifying application code.
 
 Mock definitions are persisted in a relational database and can be enabled or disabled as needed.
@@ -37,7 +27,7 @@ Mock definitions are persisted in a relational database and can be enabled or di
 
 ---
 
-## 🧑‍💻 Getting Started  
+## Getting Started  
 
 ### A. Backend
 
@@ -67,7 +57,7 @@ spring.jpa.hibernate.ddl-auto=create
    mvn spring-boot:run
   ```
 
-## 📌 Mock Examples
+## Mock Examples
 
 ### 1. Create a Mock
 **Request**  
