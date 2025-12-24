@@ -1,35 +1,41 @@
 # Fake-It
 
-A lightweight **mock API platform** with a **React frontend** and a **Spring Boot backend**.  
-It allows developers and testers to **define, manage, and serve mock APIs dynamically**.  
-This makes it easier for **frontend developers and testers** to work independently of backend services.
+Fake-It is a lightweight mock API platform designed to help frontend developers and testers work independently of live backend services.
 
+It provides a web interface and backend service that allow users to define HTTP endpoints dynamically and return predefined responses. Incoming requests are matched against stored mock definitions and served accordingly.
 
+The project consists of a React-based frontend for managing mocks and a Spring Boot backend responsible for request matching and response handling.
 
-## ✨ Features
-- Define mock APIs without code changes.
-- Supports all HTTP methods (`GET`, `POST`, `PUT`, `DELETE`, etc.).
-- Store mock definitions in a relational database (MySQL/Postgres).
-- Enable or disable mocks on demand.
-- Simple and extensible architecture.
-- Web dashboard to manage mocks visually.
+---
 
+## Overview
 
+In many development workflows, frontend development and testing depend on backend APIs that may be incomplete, unstable, or unavailable. Fake-It addresses this by allowing teams to define mock APIs at runtime without modifying application code.
 
-## 🚀 How It Works
-1. Define a mock API using the `/mocks` management endpoints.  
-2. The mock is saved in the database (`mock_requests` table).  
-3. Any request matching the path + method is served with the stored response.  
-4. If no mock is found → a `404 Not Mocked` response is returned.  
+Mock definitions are persisted in a relational database and can be enabled or disabled as needed.
 
+---
 
+## Key Features
 
-## ⚙️ Tech Stack
-- **Backend**: Spring Boot, Spring Data JPA, PostgreSQL/MySQL  
-- **Frontend**: React, TailwindCSS  
-- **Database**: Any relational DB (Postgres/MySQL recommended)
+- Define mock APIs dynamically without code changes
+- Support for all HTTP methods (GET, POST, PUT, DELETE, etc.)
+- Store mock definitions in a relational database
+- Enable or disable individual mocks
+- Serve responses based on request path and HTTP method
+- Web-based interface for managing mock APIs
 
+---
 
+## How It Works
+
+1. A mock API is created using the management endpoint.
+2. The mock definition is stored in the database.
+3. Incoming HTTP requests are intercepted by the backend.
+4. If a request matches a stored path and method, the predefined response is returned.
+5. If no matching mock exists, a `404 Not Mocked` response is returned.
+
+---
 
 ## 🧑‍💻 Getting Started  
 
@@ -109,5 +115,4 @@ Content-Type: application/json
    npm run dev
   ```
 
-Frontend will be available at:
-👉 http://localhost:5173 (or the port shown in your terminal)
+Frontend will be available at: `http://localhost:5173`
