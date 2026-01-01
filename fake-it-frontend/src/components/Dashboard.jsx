@@ -74,7 +74,7 @@ export const Dashboard = ({ mocks }) => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Recent Activity */}
-        <div className="lg:col-span-2 bg-[#F2FFDB] dark:bg-dark rounded-[32px] p-8 shadow-md border border-primary/20 dark:border-white/5 ring-1 ring-black/5">
+        <div className="lg:col-span-2 bg-white dark:bg-dark rounded-[32px] p-8 shadow-md border border-gray-200 dark:border-white/5 ring-1 ring-black/5">
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-2xl font-display font-bold text-dark dark:text-white">Recent Mocks</h3>
             <button className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-dark dark:hover:text-white">View All</button>
@@ -131,7 +131,7 @@ export const Dashboard = ({ mocks }) => {
         </div>
 
         {/* HTTP Methods Distribution */}
-        <div className="bg-[#F2FFDB] dark:bg-dark rounded-[32px] p-8 shadow-md h-fit border border-primary/20 dark:border-white/5 ring-1 ring-black/5">
+        <div className="bg-white dark:bg-dark rounded-[32px] p-8 shadow-md h-fit border border-gray-200 dark:border-white/5 ring-1 ring-black/5">
           <h3 className="text-xl font-display font-bold text-dark dark:text-white mb-6">Distribution</h3>
           <div className="flex flex-col gap-3">
             {Object.entries(stats.methods).map(([method, count]) => (
