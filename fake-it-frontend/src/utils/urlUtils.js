@@ -7,12 +7,11 @@ export class UrlUtils {
    * Dynamically detect the base URL from the current environment
    */
   static getBaseUrl() {
-    // In development, use the configured mock URL or default
-    if (import.meta.env.DEV) {
-      return import.meta.env.VITE_FAKE_IT_MOCK_URL || 'http://localhost:8080';
-    }
-    
-    // In production, use the current origin
+    const mockUrl = import.meta.env.VITE_FAKE_IT_MOCK_URL;
+    if (mockUrl) return mockUrl;
+
+    // Fallback to current origin for production environments where the 
+    // frontend and backend are served from the same domain.
     return window.location.origin;
   }
 
