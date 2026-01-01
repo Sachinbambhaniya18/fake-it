@@ -126,7 +126,7 @@ export const MocksList = ({ mocks, onMockUpdated }) => {
                 <th className="px-8 py-5 text-left text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Status</th>
                 <th className="px-8 py-5 text-left text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Name</th>
                 <th className="px-8 py-5 text-left text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Method</th>
-                <th className="px-8 py-5 text-left text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Path</th>
+                <th className="px-8 py-5 text-left text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">URL</th>
                 <th className="px-8 py-5 text-left text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Code</th>
                 <th className="px-8 py-5 text-left text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Actions</th>
               </tr>
@@ -152,7 +152,9 @@ export const MocksList = ({ mocks, onMockUpdated }) => {
                   </td>
                   <td className="px-8 py-5 whitespace-nowrap">
                     <div className="flex items-center space-x-2">
-                      <span className="text-sm text-gray-500 dark:text-gray-400 font-mono bg-gray-100 dark:bg-white/10 px-2 py-1 rounded-md">{mock.path}</span>
+                      <span className="text-sm text-gray-500 dark:text-gray-400 font-mono bg-gray-100 dark:bg-white/10 px-2 py-1 rounded-md">
+                        {UrlUtils.generateApiUrl(mock.path)}
+                      </span>
                       <button
                         onClick={() => copyApiUrl(mock)}
                         className="text-gray-300 hover:text-black dark:hover:text-white transition-colors opacity-0 group-hover:opacity-100"
