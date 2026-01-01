@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Search, PenLine as Edit, Trash2, Power, Eye, Copy, ExternalLink, ArrowUpRight } from 'lucide-react';
+import { CustomDropdown } from './CustomDropdown';
 import { MockApiService } from '../services/mockApi';
 import { UrlUtils } from '../utils/urlUtils';
 
@@ -98,27 +99,26 @@ export const MocksList = ({ mocks, onMockUpdated }) => {
             />
           </div>
 
-          <div className="relative">
-            <select
+          <div className="relative w-full sm:w-auto">
+            <CustomDropdown
+              options={[
+                { value: '', label: 'All Methods' },
+                { value: 'GET', label: 'GET' },
+                { value: 'POST', label: 'POST' },
+                { value: 'PUT', label: 'PUT' },
+                { value: 'DELETE', label: 'DELETE' },
+                { value: 'PATCH', label: 'PATCH' },
+              ]}
               value={selectedMethod}
-              onChange={(e) => setSelectedMethod(e.target.value)}
-              className="pl-4 pr-10 py-3 bg-white dark:bg-white/5 border-2 border-transparent dark:border-white/10 focus:border-black dark:focus:border-primary rounded-xl appearance-none cursor-pointer outline-none font-bold text-gray-600 dark:text-gray-300 focus:text-dark dark:focus:text-white shadow-sm w-full sm:w-auto"
-            >
-              <option value="">All Methods</option>
-              <option value="GET">GET</option>
-              <option value="POST">POST</option>
-              <option value="PUT">PUT</option>
-              <option value="DELETE">DELETE</option>
-              <option value="PATCH">PATCH</option>
-            </select>
-            <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-500">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-            </div>
+              onChange={(val) => setSelectedMethod(val)}
+              placeholder="All Methods"
+              className="w-full sm:w-40"
+            />
           </div>
         </div>
       </div>
 
-      <div className="bg-white dark:bg-dark rounded-[32px] shadow-sm overflow-hidden border border-gray-100 dark:border-white/10">
+      <div className="bg-white dark:bg-dark rounded-[32px] shadow-sm overflow-hidden border border-gray-300 dark:border-white/10">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-100 dark:divide-white/5">
             <thead>

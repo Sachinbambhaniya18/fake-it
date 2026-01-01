@@ -6,9 +6,9 @@ export const useMocks = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchMocks = useCallback(async () => {
+  const fetchMocks = useCallback(async (silent = false) => {
     try {
-      setLoading(true);
+      if (!silent) setLoading(true);
       setError(null);
       const response = await MockApiService.getInstance().getMocks();
 
@@ -34,8 +34,8 @@ export const useMocks = () => {
     fetchMocks();
   }, [fetchMocks]);
 
-  const refreshMocks = useCallback(() => {
-    fetchMocks();
+  const refreshMocks = useCallback((silent = false) => {
+    fetchMocks(silent);
   }, [fetchMocks]);
 
   return { mocks, loading, error, refreshMocks };

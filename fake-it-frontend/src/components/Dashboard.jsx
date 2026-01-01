@@ -33,7 +33,7 @@ export const Dashboard = ({ mocks }) => {
   };
 
   const StatCard = ({ title, value, icon, className }) => (
-    <div className={`bg-white dark:bg-dark rounded-[30px] p-8 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden group ${className}`}>
+    <div className={`bg-white dark:bg-dark rounded-[30px] p-8 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden group border border-gray-300 dark:border-transparent ${className}`}>
       <div className="relative z-10">
         <p className="text-gray-500 dark:text-gray-400 font-medium mb-2 uppercase tracking-wider text-xs">{title}</p>
         <p className="text-5xl font-display font-bold text-dark dark:text-white">{value}</p>
@@ -51,16 +51,10 @@ export const Dashboard = ({ mocks }) => {
           <h2 className="text-4xl font-display font-bold text-dark dark:text-white mb-2">Overview</h2>
           <p className="text-gray-500 dark:text-gray-400">Welcome back to your mock API dashboard.</p>
         </div>
-        <div className="hidden md:block">
-          <button className="bg-dark dark:bg-white dark:text-dark text-white px-6 py-3 rounded-xl font-medium hover:bg-black dark:hover:bg-gray-200 transition-colors flex items-center gap-2">
-            <Globe className="w-4 h-4" />
-            <span>Documentation</span>
-          </button>
-        </div>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <StatCard
           title="Total Mocks"
           value={stats.total}
@@ -76,17 +70,11 @@ export const Dashboard = ({ mocks }) => {
           value={stats.disabled}
           icon={<XCircle />}
         />
-        <StatCard
-          title="Endpoints"
-          value={stats.total}
-          icon={<Globe />}
-          className="bg-primary/20 dark:bg-primary/10"
-        />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Recent Activity */}
-        <div className="lg:col-span-2 bg-white dark:bg-dark rounded-[32px] p-8 shadow-sm">
+        <div className="lg:col-span-2 bg-[#F2FFDB] dark:bg-dark rounded-[32px] p-8 shadow-md border border-primary/20 dark:border-white/5 ring-1 ring-black/5">
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-2xl font-display font-bold text-dark dark:text-white">Recent Mocks</h3>
             <button className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-dark dark:hover:text-white">View All</button>
@@ -143,7 +131,7 @@ export const Dashboard = ({ mocks }) => {
         </div>
 
         {/* HTTP Methods Distribution */}
-        <div className="bg-white dark:bg-dark rounded-[32px] p-8 shadow-sm h-fit">
+        <div className="bg-[#F2FFDB] dark:bg-dark rounded-[32px] p-8 shadow-md h-fit border border-primary/20 dark:border-white/5 ring-1 ring-black/5">
           <h3 className="text-xl font-display font-bold text-dark dark:text-white mb-6">Distribution</h3>
           <div className="flex flex-col gap-3">
             {Object.entries(stats.methods).map(([method, count]) => (

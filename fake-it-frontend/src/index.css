@@ -6,7 +6,7 @@
 
 @layer base {
     body {
-        @apply bg-[#F3F3F3] text-dark font-sans;
+        @apply bg-gray-100 text-dark font-sans;
     }
 
     h1,

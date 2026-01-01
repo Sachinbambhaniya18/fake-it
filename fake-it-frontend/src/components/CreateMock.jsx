@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Plus, AlertCircle, CheckCircle, Save, RotateCcw } from 'lucide-react';
+import { Plus, AlertCircle, CheckCircle, Save, RotateCcw, X, ArrowRight, List } from 'lucide-react';
+import { CustomDropdown } from './CustomDropdown';
 import { MockApiService } from '../services/mockApi';
 
-export const CreateMock = ({ onMockCreated }) => {
+export const CreateMock = ({ onMockCreated, onNavigate }) => {
   const [formData, setFormData] = useState({
     name: '',
     path: '',
@@ -13,6 +14,7 @@ export const CreateMock = ({ onMockCreated }) => {
   });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,7 +41,7 @@ export const CreateMock = ({ onMockCreated }) => {
 
       await MockApiService.getInstance().createMock(mockData);
 
-      setMessage({ type: 'success', text: 'Mock created successfully!' });
+      setShowSuccessModal(true);
       setFormData({
         name: '',
         path: '',
@@ -48,7 +50,7 @@ export const CreateMock = ({ onMockCreated }) => {
         responseBody: '',
         enabled: true,
       });
-      onMockCreated();
+      onMockCreated(true);
     } catch (error) {
       console.error('Failed to create mock:', error);
       setMessage({ type: 'error', text: 'Failed to create mock. Please try again.' });
@@ -77,7 +79,7 @@ export const CreateMock = ({ onMockCreated }) => {
         </div>
       </div>
 
-      <div className="bg-white dark:bg-dark rounded-[32px] p-8 shadow-sm border border-gray-100 dark:border-white/10 transition-colors duration-300">
+      <div className="bg-white dark:bg-dark rounded-[32px] p-8 shadow-sm border border-gray-300 dark:border-white/10 transition-colors duration-300">
         {message && (
           <div
             className={`mb-8 p-4 rounded-xl flex items-center space-x-3 border-2 ${message.type === 'success'
@@ -139,24 +141,12 @@ export const CreateMock = ({ onMockCreated }) => {
                 HTTP Method
               </label>
               <div className="relative">
-                <select
-                  id="method"
-                  name="method"
+                <CustomDropdown
+                  options={['GET', 'POST', 'PUT', 'DELETE', 'PATCH']}
                   value={formData.method}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border-2 border-gray-200 dark:border-white/10 rounded-xl appearance-none
-                                focus:outline-none focus:border-black dark:focus:border-primary focus:bg-white dark:focus:bg-black/20 transition-all
-                                font-bold text-dark dark:text-white cursor-pointer"
-                >
-                  <option value="GET">GET</option>
-                  <option value="POST">POST</option>
-                  <option value="PUT">PUT</option>
-                  <option value="DELETE">DELETE</option>
-                  <option value="PATCH">PATCH</option>
-                </select>
-                <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-500">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-                </div>
+                  onChange={(val) => handleChange({ target: { name: 'method', value: val } })}
+                  placeholder="Select Method"
+                />
               </div>
             </div>
 
@@ -255,6 +245,43 @@ export const CreateMock = ({ onMockCreated }) => {
           </div>
         </form>
       </div>
+
+      {/* Success Modal */}
+      {showSuccessModal && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-dark rounded-[32px] shadow-2xl max-w-md w-full p-8 border border-gray-100 dark:border-white/10 transform animate-[fadeIn_0.3s_ease-out]">
+            <div className="text-center">
+              <div className="w-20 h-20 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <CheckCircle className="w-10 h-10 text-green-600 dark:text-green-400" />
+              </div>
+              <h3 className="text-2xl font-bold font-display text-dark dark:text-white mb-2">Mock Created!</h3>
+              <p className="text-gray-500 dark:text-gray-400 mb-8">
+                Your new mock endpoint has been successfully created and deployed.
+              </p>
+
+              <div className="space-y-3">
+                <button
+                  onClick={() => setShowSuccessModal(false)}
+                  className="w-full py-3.5 bg-black dark:bg-white text-white dark:text-black rounded-xl font-bold hover:shadow-lg hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2"
+                >
+                  <Plus className="w-5 h-5" />
+                  Create Another
+                </button>
+                <button
+                  onClick={() => {
+                    setShowSuccessModal(false);
+                    if (onNavigate) onNavigate('mocks');
+                  }}
+                  className="w-full py-3.5 bg-gray-100 dark:bg-white/5 text-gray-700 dark:text-gray-300 rounded-xl font-bold hover:bg-gray-200 dark:hover:bg-white/10 transition-all flex items-center justify-center gap-2"
+                >
+                  <List className="w-5 h-5" />
+                  View All Mocks
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

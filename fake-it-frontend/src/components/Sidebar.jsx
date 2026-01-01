@@ -16,7 +16,7 @@ export const Sidebar = ({ activeTab, onTabChange, isMobile = false, onClose, ope
 
   return (
     <div
-      className={`bg-white dark:bg-dark text-gray-900 dark:text-white w-64 h-full p-6 flex flex-col border-r border-gray-200 dark:border-[#2C2D35] transition-colors duration-300
+      className={`bg-white dark:bg-dark text-gray-900 dark:text-white w-64 h-full p-6 flex flex-col border-r border-gray-300 dark:border-[#2C2D35] transition-colors duration-300
         ${isMobile ? `fixed inset-y-0 left-0 z-50 transform transition-transform duration-300 ease-in-out 
         ${open ? 'translate-x-0' : '-translate-x-full'}` : ''}`}
     >
@@ -68,7 +68,7 @@ export const Sidebar = ({ activeTab, onTabChange, isMobile = false, onClose, ope
         {/* Theme Toggle */}
         <button
           onClick={toggleTheme}
-          className="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-white/10 transition-colors"
+          className="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-gray-100 dark:bg-white/5 border border-gray-300 dark:border-white/10 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-white/10 transition-colors"
         >
           <span className="text-sm font-medium flex items-center gap-2">
             {theme === 'dark' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}

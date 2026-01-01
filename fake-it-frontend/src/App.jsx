@@ -18,7 +18,7 @@ function App() {
       case 'dashboard':
         return <Dashboard mocks={mocks} />;
       case 'create':
-        return <CreateMock onMockCreated={refreshMocks} />;
+        return <CreateMock onMockCreated={refreshMocks} onNavigate={setActiveTab} />;
       case 'mocks':
         return <MocksList mocks={mocks} onMockUpdated={refreshMocks} />;
       case 'test':
@@ -42,7 +42,7 @@ function App() {
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-gray-50 dark:bg-dark transition-colors duration-300">
       {/* Mobile Top Bar */}
-      <div className="flex items-center justify-between bg-white dark:bg-dark border-b border-gray-200 dark:border-[#2C2D35] p-4 md:hidden">
+      <div className="flex items-center justify-between bg-gray-50 dark:bg-dark border-b border-gray-400 dark:border-[#2C2D35] p-4 md:hidden">
         <div className="flex items-center">
           <img src={Logo} alt="fake-it" className="h-8 w-auto filter invert dark:invert-0" />
         </div>

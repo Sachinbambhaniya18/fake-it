@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Play, Copy, CheckCircle, AlertCircle, Link, ExternalLink, Terminal, ArrowRight } from 'lucide-react';
+import { CustomDropdown } from './CustomDropdown';
 import { MockApiService } from '../services/mockApi';
 import { UrlUtils } from '../utils/urlUtils';
 import { useMocks } from '../hooks/useMocks';
@@ -111,7 +112,7 @@ export const TestAPI = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* Request Panel */}
-                <div className="bg-white dark:bg-dark rounded-[32px] p-8 shadow-sm border border-gray-100 dark:border-white/10 flex flex-col h-full transition-colors duration-300">
+                <div className="bg-white dark:bg-dark rounded-[32px] p-8 shadow-sm border border-gray-300 dark:border-white/10 flex flex-col h-full transition-colors duration-300">
                     {enabledMocks.length === 0 ? (
                         <div className="text-center py-12 flex-1 flex flex-col justify-center items-center">
                             <AlertCircle className="w-12 h-12 text-gray-300 dark:text-gray-600 mb-4" />
@@ -124,25 +125,15 @@ export const TestAPI = () => {
                                     Target Endpoint
                                 </label>
                                 <div className="relative">
-                                    <select
-                                        id="mockSelect"
+                                    <CustomDropdown
+                                        options={enabledMocks.map(mock => ({
+                                            value: mock.id,
+                                            label: `[${mock.method}] ${mock.name}`
+                                        }))}
                                         value={selectedMock}
-                                        onChange={(e) => handleMockSelection(e.target.value)}
-                                        className="w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border-2 border-gray-200 dark:border-white/10 rounded-xl appearance-none
-                                                    focus:outline-none focus:border-black dark:focus:border-primary focus:bg-white dark:focus:bg-black/20 transition-all
-                                                    font-medium text-dark dark:text-white cursor-pointer"
-                                        required
-                                    >
-                                        <option value="">Select an endpoint...</option>
-                                        {enabledMocks.map((mock) => (
-                                            <option key={mock.id} value={mock.id}>
-                                                [{mock.method}] {mock.name}
-                                            </option>
-                                        ))}
-                                    </select>
-                                    <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-400">
-                                        <ArrowRight className="w-5 h-5" />
-                                    </div>
+                                        onChange={(val) => handleMockSelection(val)}
+                                        placeholder="Select an endpoint..."
+                                    />
                                 </div>
                             </div>
 
