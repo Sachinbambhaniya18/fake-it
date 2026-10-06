@@ -185,7 +185,7 @@ export const CreateMock = ({ onMockCreated, onNavigate }) => {
               className="w-full p-4 bg-gray-900 border-2 border-gray-900 dark:border-white/10 rounded-xl text-green-400
                          focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all
                          font-mono text-sm shadow-inner"
-              placeholder='{"id": 1, "name": "John Doe", "email": "john@example.com"}'
+              placeholder='{"id": 1, "name": "Spot Boy", "email": "spot@boy.com"}'
             />
             <p className="text-sm text-gray-400">
               Enter JSON response body or plain text
