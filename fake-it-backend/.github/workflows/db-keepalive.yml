@@ -1,0 +1,38 @@
+
+name: Aiven Database Keepalive
+
+on:
+  schedule:
+    - cron: "*/2 * * * *"
+  workflow_dispatch:
+
+jobs:
+  keep-database-alive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install PostgreSQL driver
+        run: pip install "psycopg[binary]"
+
+      - name: Ping Aiven PostgreSQL
+        env:
+          DATABASE_URL: ${{ secrets.AIVEN_DATABASE_URL }}
+        run: |
+          python - <<'PY'
+          import os
+          import psycopg
+
+          with psycopg.connect(
+              os.environ["DATABASE_URL"],
+              connect_timeout=20
+          ) as conn:
+              with conn.cursor() as cur:
+                  cur.execute("SELECT 1")
+                  print("Aiven database is alive:", cur.fetchone())
+          PY

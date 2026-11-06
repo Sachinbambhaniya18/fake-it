@@ -10,8 +10,6 @@ export class UrlUtils {
     const mockUrl = import.meta.env.VITE_FAKE_IT_MOCK_URL;
     if (mockUrl) return mockUrl;
 
-    // Fallback to current origin for production environments where the 
-    // frontend and backend are served from the same domain.
     return window.location.origin;
   }
 
